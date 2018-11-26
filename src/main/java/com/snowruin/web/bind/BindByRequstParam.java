@@ -1,9 +1,9 @@
 package com.snowruin.web.bind;
 
 import java.lang.reflect.Parameter;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.snowruin.annotation.XRequestParam;
 
@@ -15,8 +15,18 @@ import com.snowruin.annotation.XRequestParam;
  */
 public class BindByRequstParam implements BindParam {
 
-	public Object bindingParamter(Parameter parameter, HttpServletRequest request)
+	public Object bindingParamter(Parameter parameter, HttpServletRequest request,HttpServletResponse response)
 			throws IllegalAccessException, InstantiationException, NoSuchMethodException {
+		
+		String simpleName = parameter.getType().getSimpleName();
+		if("HttpServletRequest".equals(simpleName)) {
+			return request;
+		}
+		
+		if("HttpServletResponse".equals(simpleName)) {
+			return response;
+		}
+		
 		
 		XRequestParam requestParam = parameter.getAnnotation(XRequestParam.class);
 		String value =  requestParam.value();

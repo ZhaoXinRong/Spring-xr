@@ -112,7 +112,7 @@ public class DispatchServlet extends HttpServlet {
 		// 获取扫描Controller 注解后url 和方法绑定的Mapping ，也就是handlerMapping
 		Map<String, Method> bindRequestMapping = (Map<String, Method>) servletContext.getAttribute("bindRequestMapping");
 	 
- 		List<Object> resultParameters = Bind.bingMethodParamters(bindRequestMapping, request);
+ 		List<Object> resultParameters = Bind.bingMethodParamters(bindRequestMapping, request,response);
 		
 		// 获取实例化的bean容器
 		Map<String, Object> beanContainer =  (Map<String, Object>) servletContext.getAttribute("beanContainer");
@@ -171,13 +171,6 @@ public class DispatchServlet extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
-				response.setContentType("text/html;charset=utf-8");
-				try {
-					response.getWriter().println(result);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 		}

@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletResponse;
 
 import com.snowruin.annotation.XModelAttribute;
 import com.snowruin.util.AnnotationUtils;
@@ -25,8 +25,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BindByModelAttribute  implements BindParam{
 	
-	public Object bindingParamter(Parameter parameter, HttpServletRequest request)
+	public Object bindingParamter(Parameter parameter, HttpServletRequest request,HttpServletResponse response)
 			throws IllegalAccessException, InstantiationException, NoSuchMethodException {
+		
+		String simpleName = parameter.getType().getSimpleName();
+		if("HttpServletRequest".equals(simpleName)) {
+			return request;
+		}
+		
+		if("HttpServletResponse".equals(simpleName)) {
+			return response;
+		}
+		
 		XModelAttribute modelAttribute = parameter.getAnnotation(XModelAttribute.class);
 		Class<?> type = parameter.getType();
 		if(!AnnotationUtils.isEmpty(modelAttribute)) {

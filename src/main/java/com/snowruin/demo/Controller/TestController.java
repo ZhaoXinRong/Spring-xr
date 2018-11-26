@@ -1,7 +1,11 @@
 package com.snowruin.demo.Controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.collect.Lists;
 import com.snowruin.annotation.XAutowired;
@@ -21,19 +25,22 @@ public class TestController {
 	
 	@XRequestMapping("/hello")
 	@XResponseBody
-	public List<String> sayHello() {
+	public List<String> sayHello(@XRequestParam("msg")String  msg) {
 		System.out.println(testService.sayHello());
 		List<String  > result = Lists.newArrayList();
 		result.add("sdfsdf");
 		result.add("111");
 		result.add("33");
 		result.add("444");
+		System.out.println(msg);
 		return result;
 	}
 	
 	@XRequestMapping("/handler")
-	public ModelAndView handler(@XRequestParam("msg")String msg) {
+	public ModelAndView handler(@XRequestParam("msg")String msg,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		return new ModelAndView("view").setModelMap((ModelMap)new ModelMap().addAttribute("message", msg));
+//		request.setAttribute("message", msg);
+//		request.getRequestDispatcher("/WEB-INF/views/view.jsp").forward(request, response);
 	}
 	
 }
