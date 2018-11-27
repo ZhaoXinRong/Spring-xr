@@ -125,10 +125,6 @@ public class DispatchServlet extends HttpServlet {
 			url = requestURI.replace(contextPath, "");
 		}
 		
-//		if(StringUtils.isNotEmpty(Constants.requestMap.get(url))) {
-//			url = Constants.requestMap.get(url);
-//		}
-		
 		if(bindRequestMapping.containsKey(url)) {
 			Method method = bindRequestMapping.get(url);
 			Class<?> returnType = method.getReturnType();
@@ -147,7 +143,6 @@ public class DispatchServlet extends HttpServlet {
 				String path = prefix + viewName + suffix;
 				
 				try {
-				//	Constants.requestMap.put(path, url);
 					request.getRequestDispatcher(path).forward(request, response);
 					return;
 				} catch (ServletException e) {

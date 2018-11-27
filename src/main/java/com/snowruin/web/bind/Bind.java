@@ -9,6 +9,7 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.snowruin.annotation.XModelAttribute;
 import com.snowruin.annotation.XRequestParam;
@@ -35,10 +36,7 @@ public class Bind {
 			url = requestURI.replace(contextPath, "");
 		}
 		log.info("请求的路径是：{}",url);
-//		String string = Constants.requestMap.get(url);
-//		if(StringUtils.isNotEmpty(string)) {
-//			url = string;
-//		}
+
 		
 		if(StringUtils.isNotEmpty(url)) {
 			Method method = bindRequestMapping.get(url);
@@ -46,13 +44,11 @@ public class Bind {
 				return  Lists.newArrayList();
 			}
 			
-			
-			
 			Parameter[] parameters = method.getParameters();
 			if(parameters == null || parameters.length ==0) {
 				log.info("暂无请求参数");
 			}else {
-				log.info("请求参数是：{}",parameters.toString());
+				log.info("请求参数是：{}",parameters);
 				try {
 					for (Parameter parameter : parameters) {
 						Object bindEachParam = bindEachParam = bindEachParam(parameter, request,response);

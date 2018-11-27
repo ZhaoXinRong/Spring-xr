@@ -39,8 +39,12 @@ public class TestController {
 	@XRequestMapping("/handler")
 	public ModelAndView handler(@XRequestParam("msg")String msg,HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		return new ModelAndView("view").setModelMap((ModelMap)new ModelMap().addAttribute("message", msg));
-//		request.setAttribute("message", msg);
-//		request.getRequestDispatcher("/WEB-INF/views/view.jsp").forward(request, response);
+	}
+	
+	
+	@XRequestMapping("/test")
+	public void handler(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		response.sendRedirect("index.jsp");
 	}
 	
 }
